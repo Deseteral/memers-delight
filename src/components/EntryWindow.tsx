@@ -14,9 +14,7 @@ const Container = styled.div`
   flex-direction: column;
 `;
 
-interface EntryWindowProps { }
-
-function EntryWindow(props: EntryWindowProps): JSX.Element {
+function EntryWindow(): JSX.Element {
   React.useEffect(() => {
     ActionService.init();
   }, []);
@@ -40,11 +38,14 @@ function EntryWindow(props: EntryWindowProps): JSX.Element {
       case 'ArrowDown':
         idx += 1;
         break;
-      case 'Enter':
-        ActionService.executeActionFor(MemeListService.getItemForIndex(list, selectedIndex));
-        setEntryValue('');
-        setSelectedIndex(0);
-        return;
+      case 'Enter': {
+        const item = MemeListService.getItemForIndex(list, selectedIndex);
+        const executed = ActionService.executeActionFor(item);
+        if (executed) {
+          setEntryValue('');
+          setSelectedIndex(0);
+        }
+      } return;
       case 'Escape':
         ipcRenderer.send('hide-entry-window');
         setEntryValue('');
@@ -69,4 +70,3 @@ function EntryWindow(props: EntryWindowProps): JSX.Element {
 }
 
 export default EntryWindow;
-export { EntryWindowProps };

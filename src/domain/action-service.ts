@@ -10,12 +10,13 @@ class ActionService {
     });
   }
 
-  static executeActionFor(item: (MemeListItem | null)) {
-    if (item === null) return;
-    if (item.type === 'MEME_LIST_DATA') {
+  static executeActionFor(item: (MemeListItem | null)): boolean {
+    if (item?.type === 'MEME_LIST_DATA') {
       ActionService.executeActionForDataItem(item);
       ipcRenderer.send('hide-entry-window');
+      return true;
     }
+    return false;
   }
 
   private static executeActionForDataItem(item: MemeListData) {
