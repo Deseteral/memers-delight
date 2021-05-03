@@ -1,5 +1,8 @@
 import * as React from 'react';
 import styled from 'styled-components';
+import MemeListService from '../domain/meme-list-service';
+import { MemeList } from '../domain/meme-list';
+import EntryListing from './EntryListing';
 import MemeEntry from './MemeEntry';
 
 const Container = styled.div`
@@ -7,6 +10,7 @@ const Container = styled.div`
   padding: 16px;
   border-radius: 8px;
   display: flex;
+  flex-direction: column;
 `;
 
 interface EntryWindowProps { }
@@ -14,6 +18,7 @@ interface EntryWindowProps { }
 function EntryWindow(props: EntryWindowProps): JSX.Element {
   const [entryValue, setEntryValue] = React.useState<string>('');
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
+  const memeList = MemeListService.getForQuery(entryValue);
 
   const handleEntryChange = (value: string) => {
     setEntryValue(value);
@@ -41,6 +46,7 @@ function EntryWindow(props: EntryWindowProps): JSX.Element {
   return (
     <Container onKeyDown={handleKeyDown}>
       <MemeEntry onChange={handleEntryChange} />
+      {memeList.groups.length > 0 && (<EntryListing list={memeList} />)}
     </Container>
   );
 }
