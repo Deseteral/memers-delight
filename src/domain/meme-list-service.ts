@@ -44,6 +44,7 @@ class MemeListService {
           items: [
             { type: 'MEME_LIST_DATA', name: 'looking away', url: 'https://i.redd.it/6z05rh5fe7m31.png', index: -1 },
             { type: 'MEME_LIST_DATA', name: 'surprised pikatchu', url: 'https://i.kym-cdn.com/entries/icons/original/000/027/475/Screen_Shot_2018-10-25_at_11.02.15_AM.png', index: -1 },
+            { type: 'MEME_LIST_DATA', name: 'shaq', url: 'https://media1.giphy.com/media/go3X4svFhKdzi/giphy.gif', index: -1 },
           ],
         }, {
           name: 'Meme actions',
