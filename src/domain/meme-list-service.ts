@@ -28,6 +28,14 @@ class MemeListService {
     };
   }
 
+  static getItemForIndex(list: MemeList, searchIndex: number): (MemeListItem | null) {
+    const filteredList = list.groups
+      .flatMap((group) => group.items)
+      .filter((item) => item.index === searchIndex);
+
+    return filteredList.length === 0 ? null : filteredList[0];
+  }
+
   private static getAllEntries(): MemeList {
     return {
       groups: [

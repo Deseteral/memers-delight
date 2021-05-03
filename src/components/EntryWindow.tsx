@@ -35,6 +35,9 @@ function EntryWindow(props: EntryWindowProps): JSX.Element {
       case 'ArrowDown':
         idx += 1;
         break;
+      case 'Enter':
+        console.log(MemeListService.getItemForIndex(list, selectedIndex));
+        break;
       default: break;
     }
 
