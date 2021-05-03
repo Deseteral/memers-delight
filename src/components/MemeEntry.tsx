@@ -18,11 +18,16 @@ function MemeEntry({ onChange }: MemeEntryProps): JSX.Element {
     entryElement.current.focus();
   });
 
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.code === 'ArrowUp' || event.code === 'ArrowDown') event.preventDefault();
+  };
+
   return (
     <EntryInput
       type="text"
       ref={entryElement}
       onChange={(event) => onChange(event.target.value)}
+      onKeyDown={handleKeyDown}
     />
   );
 }
