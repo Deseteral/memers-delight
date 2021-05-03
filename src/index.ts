@@ -1,4 +1,5 @@
 import { app, ipcMain, globalShortcut, BrowserWindow } from 'electron';
+import fetch from 'node-fetch';
 
 declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
 
@@ -21,7 +22,13 @@ const createWindow = () => {
 };
 
 app.on('ready', () => {
-  globalShortcut.register('Command+Control+Shift+M', () => mainWindow?.show());
+  globalShortcut.register('Command+Control+Shift+M', () => {
+    if (!mainWindow) return;
+    mainWindow.setVisibleOnAllWorkspaces(true);
+    mainWindow.focus();
+    mainWindow.setVisibleOnAllWorkspaces(false);
+    mainWindow.show();
+  });
   createWindow();
 });
 
@@ -37,4 +44,10 @@ app.on('activate', () => {
 
 ipcMain.on('hide-entry-window', () => {
   mainWindow?.hide();
+});
+
+ipcMain.on('download-image', async (event, url) => {
+  const data = await fetch(url);
+  const buffer = await data.buffer();
+  event.reply('image-buffer', buffer);
 });

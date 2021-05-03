@@ -11,10 +11,13 @@ type MemeListItem =
   | MemeListAction
   | MemeListData;
 
+type MemeListActionIds =
+  | 'ADD_MEME';
+
 interface MemeListAction {
   type: 'MEME_LIST_ACTION',
+  actionId: MemeListActionIds,
   name: string,
-  actionId: string,
   index: number,
 }
 

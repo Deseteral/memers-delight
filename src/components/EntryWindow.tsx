@@ -2,7 +2,6 @@ import * as React from 'react';
 import styled from 'styled-components';
 import MemeListService from '../domain/meme-list-service';
 import ActionService from '../domain/action-service';
-import { MemeList } from '../domain/meme-list';
 import EntryListing from './EntryListing';
 import MemeEntry from './MemeEntry';
 
@@ -17,6 +16,10 @@ const Container = styled.div`
 interface EntryWindowProps { }
 
 function EntryWindow(props: EntryWindowProps): JSX.Element {
+  React.useEffect(() => {
+    ActionService.init();
+  }, []);
+
   const [entryValue, setEntryValue] = React.useState<string>('');
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
   const { list, itemCount } = MemeListService.getForQuery(entryValue);
