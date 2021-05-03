@@ -1,8 +1,8 @@
 import { ipcRenderer } from 'electron';
 import * as React from 'react';
 import styled from 'styled-components';
-import MemeListService from '../domain/meme-list-service';
-import ActionService from '../domain/action-service';
+import MemeListService from '../../domain/meme-list-service';
+import ActionService from '../../domain/action-service';
 import EntryListing from './EntryListing';
 import MemeEntry from './MemeEntry';
 

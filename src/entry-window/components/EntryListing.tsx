@@ -1,7 +1,7 @@
 /* eslint-disable @typescript-eslint/no-use-before-define */
 import * as React from 'react';
 import styled from 'styled-components';
-import { MemeList, MemeListAction, MemeListData, MemeListGroup, MemeListItem } from '../domain/meme-list';
+import { MemeList, MemeListAction, MemeListData, MemeListGroup, MemeListItem } from '../../domain/meme-list';
 
 const ListContainer = styled.div`
   display: flex;

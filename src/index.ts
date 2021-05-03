@@ -1,12 +1,12 @@
 import { app, ipcMain, globalShortcut, BrowserWindow } from 'electron';
 import fetch from 'node-fetch';
 
-declare const MAIN_WINDOW_WEBPACK_ENTRY: any;
+declare const ENTRY_WINDOW_WEBPACK_ENTRY: any;
 
-let mainWindow: (BrowserWindow | null) = null;
+let entryWindow: (BrowserWindow | null) = null;
 
-const createWindow = () => {
-  mainWindow = new BrowserWindow({
+function createEntryWindow() {
+  entryWindow = new BrowserWindow({
     height: 600,
     width: 800,
     transparent: true,
@@ -17,21 +17,21 @@ const createWindow = () => {
     },
   });
 
-  mainWindow.loadURL(MAIN_WINDOW_WEBPACK_ENTRY);
-  mainWindow.webContents.openDevTools();
-};
+  entryWindow.loadURL(ENTRY_WINDOW_WEBPACK_ENTRY);
+  entryWindow.webContents.openDevTools();
+}
 
 app.on('ready', () => {
   globalShortcut.register('Command+Control+Shift+M', () => {
-    if (!mainWindow) return;
+    if (!entryWindow) return;
 
-    mainWindow.webContents.send('will-show-window');
-    mainWindow.setVisibleOnAllWorkspaces(true);
-    mainWindow.focus();
-    mainWindow.setVisibleOnAllWorkspaces(false);
-    mainWindow.show();
+    entryWindow.webContents.send('will-show-window');
+    entryWindow.setVisibleOnAllWorkspaces(true);
+    entryWindow.focus();
+    entryWindow.setVisibleOnAllWorkspaces(false);
+    entryWindow.show();
   });
-  createWindow();
+  createEntryWindow();
 });
 
 app.on('will-quit', () => {
@@ -40,12 +40,12 @@ app.on('will-quit', () => {
 
 app.on('activate', () => {
   if (BrowserWindow.getAllWindows().length === 0) {
-    createWindow();
+    createEntryWindow();
   }
 });
 
 ipcMain.on('hide-entry-window', () => {
-  mainWindow?.hide();
+  entryWindow?.hide();
 });
 
 ipcMain.on('download-image', async (event, url) => {
