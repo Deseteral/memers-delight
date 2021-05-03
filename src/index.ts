@@ -53,3 +53,7 @@ ipcMain.on('download-image', async (event, url) => {
   const buffer = await data.buffer();
   event.reply('image-buffer', buffer);
 });
+
+ipcMain.on('open-add-meme-modal', () => {
+
+});

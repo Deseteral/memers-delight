@@ -1,4 +1,4 @@
-import { clipboard, ipcRenderer, nativeImage } from 'electron';
+import { clipboard, ipcMain, ipcRenderer, nativeImage } from 'electron';
 import { MemeListAction, MemeListData, MemeListItem } from './meme-list';
 
 class ActionService {
@@ -15,6 +15,11 @@ class ActionService {
       ActionService.executeActionForDataItem(item);
       ipcRenderer.send('hide-entry-window');
     }
+
+    if (item?.type === 'MEME_LIST_ACTION') {
+      ActionService.executeActionForActionItem(item);
+      ipcRenderer.send('hide-entry-window');
+    }
   }
 
   private static executeActionForDataItem(item: MemeListData) {
@@ -24,6 +29,19 @@ class ActionService {
     } else {
       clipboard.writeText(url);
     }
+  }
+
+  private static executeActionForActionItem(item: MemeListAction) {
+    switch (item.actionId) {
+      case 'ADD_MEME':
+        ActionService.openAddMemeModal();
+        break;
+      default: break;
+    }
+  }
+
+  private static openAddMemeModal() {
+    ipcRenderer.send('open-add-meme-modal');
   }
 }
 
