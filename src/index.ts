@@ -12,10 +12,11 @@ const createWindow = (): void => {
   const mainWindow = new BrowserWindow({
     height: 600,
     width: 800,
+    transparent: true,
+    frame: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
-      // enableRemoteModule: true,
     },
   });
 
