@@ -12,18 +12,10 @@ class ActionService {
 
   static executeActionFor(item: (MemeListItem | null)) {
     if (item === null) return;
-
-    switch (item.type) {
-      case 'MEME_LIST_DATA':
-        ActionService.executeActionForDataItem(item);
-        break;
-      case 'MEME_LIST_ACTION':
-        ActionService.executeActionForActionItem(item);
-        break;
-      default: break;
+    if (item.type === 'MEME_LIST_DATA') {
+      ActionService.executeActionForDataItem(item);
+      ipcRenderer.send('hide-entry-window');
     }
-
-    ipcRenderer.send('hide-entry-window');
   }
 
   private static executeActionForDataItem(item: MemeListData) {
@@ -32,10 +24,6 @@ class ActionService {
     } else {
       clipboard.writeText(item.url);
     }
-  }
-
-  private static executeActionForActionItem(item: MemeListAction) {
-
   }
 }
 

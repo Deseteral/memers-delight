@@ -28,10 +28,16 @@ interface MemeListData {
   index: number,
 }
 
+interface MemeData {
+  name: string,
+  url: string,
+}
+
 export {
   MemeList,
   MemeListGroup,
   MemeListItem,
   MemeListAction,
   MemeListData,
+  MemeData,
 };

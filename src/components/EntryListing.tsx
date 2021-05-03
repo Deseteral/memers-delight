@@ -56,19 +56,6 @@ function ListingItem({ item, selectedIndex }: ListingItemProps): JSX.Element {
   }
 }
 
-interface ListingActionItemProps {
-  item: MemeListAction,
-  selectedIndex: number,
-}
-
-function ListingActionItem({ item, selectedIndex }: ListingActionItemProps): JSX.Element {
-  return (
-    <ListItem selected={item.index === selectedIndex}>
-      {item.name}, action id: {item.actionId}
-    </ListItem>
-  );
-}
-
 interface ListingDataItemProps {
   item: MemeListData,
   selectedIndex: number,
@@ -78,6 +65,19 @@ function ListingDataItem({ item, selectedIndex }: ListingDataItemProps): JSX.Ele
   return (
     <ListItem selected={item.index === selectedIndex}>
       {item.name}, {item.url}
+    </ListItem>
+  );
+}
+
+interface ListingActionItemProps {
+  item: MemeListAction,
+  selectedIndex: number,
+}
+
+function ListingActionItem({ item, selectedIndex }: ListingActionItemProps): JSX.Element {
+  return (
+    <ListItem selected={item.index === selectedIndex}>
+      {item.name}, action id: {item.actionId}
     </ListItem>
   );
 }
