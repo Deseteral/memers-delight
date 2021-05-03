@@ -9,10 +9,11 @@ const EntryInput = styled.input`
 `;
 
 interface MemeEntryProps {
+  value: string,
   onChange: (value: string) => void,
 }
 
-function MemeEntry({ onChange }: MemeEntryProps): JSX.Element {
+function MemeEntry({ value, onChange }: MemeEntryProps): JSX.Element {
   const entryElement = React.useRef<HTMLInputElement>(null);
   React.useEffect(() => {
     entryElement.current.focus();
@@ -26,6 +27,7 @@ function MemeEntry({ onChange }: MemeEntryProps): JSX.Element {
     <EntryInput
       type="text"
       ref={entryElement}
+      value={value}
       onChange={(event) => onChange(event.target.value)}
       onKeyDown={handleKeyDown}
     />

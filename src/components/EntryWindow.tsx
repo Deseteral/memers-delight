@@ -1,6 +1,7 @@
 import * as React from 'react';
 import styled from 'styled-components';
 import MemeListService from '../domain/meme-list-service';
+import ActionService from '../domain/action-service';
 import { MemeList } from '../domain/meme-list';
 import EntryListing from './EntryListing';
 import MemeEntry from './MemeEntry';
@@ -36,8 +37,10 @@ function EntryWindow(props: EntryWindowProps): JSX.Element {
         idx += 1;
         break;
       case 'Enter':
-        console.log(MemeListService.getItemForIndex(list, selectedIndex));
-        break;
+        ActionService.executeActionFor(MemeListService.getItemForIndex(list, selectedIndex));
+        setEntryValue('');
+        setSelectedIndex(0);
+        return;
       default: break;
     }
 
@@ -48,7 +51,7 @@ function EntryWindow(props: EntryWindowProps): JSX.Element {
 
   return (
     <Container onKeyDown={handleKeyDown}>
-      <MemeEntry onChange={handleEntryChange} />
+      <MemeEntry value={entryValue} onChange={handleEntryChange} />
       {list.groups.length > 0 && (
         <EntryListing list={list} selectedIndex={selectedIndex} />
       )}
