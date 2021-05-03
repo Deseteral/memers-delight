@@ -17,7 +17,7 @@ function MemeEntry({ value, onChange }: MemeEntryProps): JSX.Element {
   const entryElement = React.useRef<HTMLInputElement>(null);
   React.useEffect(() => {
     entryElement.current.focus();
-  });
+  }, []);
 
   const handleKeyDown = (event: React.KeyboardEvent) => {
     if (event.code === 'ArrowUp' || event.code === 'ArrowDown') event.preventDefault();

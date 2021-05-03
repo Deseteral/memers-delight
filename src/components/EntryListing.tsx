@@ -20,6 +20,17 @@ const GroupItemsContainer = styled.div`
 const ListItem = styled.div<{ selected: boolean }>`
   border-radius: 4px;
   background-color: ${(props) => (props.selected ? '#00b0ff3d' : 'transparent')};
+  height: 48px;
+  padding: 0 4px;
+  display: flex;
+  align-items: center;
+`;
+
+const ItemImage = styled.img`
+  width: 40px;
+  height: 40px;
+  object-fit: cover;
+  margin-right: 8px;
 `;
 
 interface EntryListingProps { list: MemeList, selectedIndex: number }
@@ -64,7 +75,8 @@ interface ListingDataItemProps {
 function ListingDataItem({ item, selectedIndex }: ListingDataItemProps): JSX.Element {
   return (
     <ListItem selected={item.index === selectedIndex}>
-      {item.name}, {item.url}
+      <ItemImage src={item.url} />
+      <span>{item.name}</span>
     </ListItem>
   );
 }
