@@ -15,13 +15,18 @@ const Container = styled.div`
 `;
 
 function EntryWindow(): JSX.Element {
-  React.useEffect(() => {
-    ActionService.init();
-  }, []);
-
   const [entryValue, setEntryValue] = React.useState<string>('');
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0); // TODO: Move to context
   const { list, itemCount } = MemeListService.getForQuery(entryValue);
+
+  React.useEffect(() => {
+    ActionService.init();
+
+    ipcRenderer.on('will-show-window', (event) => {
+      setEntryValue('');
+      setSelectedIndex(0);
+    });
+  }, []);
 
   const handleEntryChange = (value: string) => {
     setEntryValue(value);
@@ -40,16 +45,10 @@ function EntryWindow(): JSX.Element {
         break;
       case 'Enter': {
         const item = MemeListService.getItemForIndex(list, selectedIndex);
-        const executed = ActionService.executeActionFor(item);
-        if (executed) {
-          setEntryValue('');
-          setSelectedIndex(0);
-        }
+        ActionService.executeActionFor(item);
       } return;
       case 'Escape':
         ipcRenderer.send('hide-entry-window');
-        setEntryValue('');
-        setSelectedIndex(0);
         return;
       default: break;
     }

@@ -24,6 +24,8 @@ const createWindow = () => {
 app.on('ready', () => {
   globalShortcut.register('Command+Control+Shift+M', () => {
     if (!mainWindow) return;
+
+    mainWindow.webContents.send('will-show-window');
     mainWindow.setVisibleOnAllWorkspaces(true);
     mainWindow.focus();
     mainWindow.setVisibleOnAllWorkspaces(false);

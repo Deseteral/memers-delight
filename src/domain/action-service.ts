@@ -10,20 +10,19 @@ class ActionService {
     });
   }
 
-  static executeActionFor(item: (MemeListItem | null)): boolean {
+  static executeActionFor(item: (MemeListItem | null)) {
     if (item?.type === 'MEME_LIST_DATA') {
       ActionService.executeActionForDataItem(item);
       ipcRenderer.send('hide-entry-window');
-      return true;
     }
-    return false;
   }
 
   private static executeActionForDataItem(item: MemeListData) {
-    if (item.url.endsWith('.png') || item.url.endsWith('.jpg') || item.url.endsWith('.jpeg')) {
-      ipcRenderer.send('download-image', item.url);
+    const { url } = item;
+    if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')) {
+      ipcRenderer.send('download-image', url);
     } else {
-      clipboard.writeText(item.url);
+      clipboard.writeText(url);
     }
   }
 }
