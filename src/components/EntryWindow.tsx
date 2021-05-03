@@ -18,7 +18,7 @@ interface EntryWindowProps { }
 function EntryWindow(props: EntryWindowProps): JSX.Element {
   const [entryValue, setEntryValue] = React.useState<string>('');
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0);
-  const memeList = MemeListService.getForQuery(entryValue);
+  const { list, itemCount } = MemeListService.getForQuery(entryValue);
 
   const handleEntryChange = (value: string) => {
     setEntryValue(value);
@@ -38,15 +38,17 @@ function EntryWindow(props: EntryWindowProps): JSX.Element {
       default: break;
     }
 
-    if (idx < 0) idx = 0;
+    if (idx < 0) idx = (itemCount);
+    if (idx > itemCount) idx = 0;
     setSelectedIndex(idx);
-    console.log(idx);
   };
 
   return (
     <Container onKeyDown={handleKeyDown}>
       <MemeEntry onChange={handleEntryChange} />
-      {memeList.groups.length > 0 && (<EntryListing list={memeList} />)}
+      {list.groups.length > 0 && (
+        <EntryListing list={list} selectedIndex={selectedIndex} />
+      )}
     </Container>
   );
 }

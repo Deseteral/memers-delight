@@ -17,53 +17,68 @@ const GroupItemsContainer = styled.div`
   padding-left: 8px;
 `;
 
-interface EntryListingProps { list: MemeList }
-function EntryListing({ list }: EntryListingProps): JSX.Element {
+const ListItem = styled.div<{ selected: boolean }>`
+  border-radius: 4px;
+  background-color: ${(props) => (props.selected ? '#00b0ff3d' : 'transparent')};
+`;
+
+interface EntryListingProps { list: MemeList, selectedIndex: number }
+function EntryListing({ list, selectedIndex }: EntryListingProps): JSX.Element {
   return (
     <ListContainer>
-      {list.groups.map((group) => <ListingGroup group={group} />)}
+      {list.groups.map((group) => (
+        <ListingGroup group={group} selectedIndex={selectedIndex} key={group.name} />
+      ))}
     </ListContainer>
   );
 }
 
-interface ListingGroupProps { group: MemeListGroup }
-function ListingGroup({ group }: ListingGroupProps): JSX.Element {
+interface ListingGroupProps { group: MemeListGroup, selectedIndex: number }
+function ListingGroup({ group, selectedIndex }: ListingGroupProps): JSX.Element {
   return (
     <>
       <ListGroupName>{group.name}</ListGroupName>
       <GroupItemsContainer>
-        {group.items.map((item) => <ListingItem item={item} />)}
+        {group.items.map((item) => (
+          <ListingItem item={item} selectedIndex={selectedIndex} key={item.name} />
+        ))}
       </GroupItemsContainer>
     </>
   );
 }
 
-interface ListingItemProps { item: MemeListItem }
-function ListingItem({ item }: ListingItemProps): JSX.Element {
+interface ListingItemProps { item: MemeListItem, selectedIndex: number }
+function ListingItem({ item, selectedIndex }: ListingItemProps): JSX.Element {
   switch (item.type) {
-    case 'MEME_LIST_ACTION': return <ListingActionItem item={item} />;
-    case 'MEME_LIST_DATA': return <ListingDataItem item={item} />;
+    case 'MEME_LIST_ACTION': return <ListingActionItem item={item} selectedIndex={selectedIndex} />;
+    case 'MEME_LIST_DATA': return <ListingDataItem item={item} selectedIndex={selectedIndex} />;
     default: break;
   }
 }
 
 interface ListingActionItemProps {
   item: MemeListAction,
+  selectedIndex: number,
 }
 
-function ListingActionItem({ item }: ListingActionItemProps): JSX.Element {
+function ListingActionItem({ item, selectedIndex }: ListingActionItemProps): JSX.Element {
   return (
-    <div>action id: {item.actionId}</div>
+    <ListItem selected={item.index === selectedIndex}>
+      {item.name}, action id: {item.actionId}
+    </ListItem>
   );
 }
 
 interface ListingDataItemProps {
   item: MemeListData,
+  selectedIndex: number,
 }
 
-function ListingDataItem({ item }: ListingDataItemProps): JSX.Element {
+function ListingDataItem({ item, selectedIndex }: ListingDataItemProps): JSX.Element {
   return (
-    <div>{item.name}: {item.url}</div>
+    <ListItem selected={item.index === selectedIndex}>
+      {item.name}, {item.url}
+    </ListItem>
   );
 }
 
