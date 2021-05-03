@@ -1,4 +1,4 @@
-import {clipboard} from 'electron';
+import { clipboard } from 'electron';
 
 const body = document.querySelector('body');
 body.addEventListener('keydown', (e) => {
