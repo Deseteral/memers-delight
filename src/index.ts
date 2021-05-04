@@ -1,5 +1,6 @@
 import { app, ipcMain, globalShortcut, BrowserWindow } from 'electron';
 import fetch from 'node-fetch';
+import { MemeData } from './domain/meme-list';
 
 declare const ENTRY_WINDOW_WEBPACK_ENTRY: any;
 declare const ADD_MEME_WINDOW_WEBPACK_ENTRY: any;
@@ -70,7 +71,7 @@ ipcMain.on('close-add-meme-window', () => {
   addMemeWindow?.close();
 });
 
-ipcMain.on('download-image', async (event, url) => {
+ipcMain.on('download-image', async (event, url: string) => {
   const data = await fetch(url);
   const buffer = await data.buffer();
   event.reply('image-buffer', buffer);
@@ -80,6 +81,6 @@ ipcMain.on('open-add-meme-modal', () => {
   createAddMemeWindow();
 });
 
-ipcMain.on('add-meme', (event, { name, url }) => {
-  console.log(name, url);
+ipcMain.on('add-meme', (event, data: MemeData) => {
+  console.log(data);
 });

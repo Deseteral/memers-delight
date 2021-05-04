@@ -1,6 +1,7 @@
 import './index.css';
 import { clipboard, ipcRenderer } from 'electron';
 import ActionService from '../domain/action-service';
+import { MemeData } from '../domain/meme-list';
 
 document.addEventListener('DOMContentLoaded', () => {
   const nameInput = document.getElementById('name-input') as HTMLInputElement;
@@ -21,7 +22,8 @@ document.addEventListener('DOMContentLoaded', () => {
       return;
     }
 
-    ipcRenderer.send('add-meme', { name, url });
+    const data: MemeData = { name, url };
+    ipcRenderer.send('add-meme', data);
     ActionService.executeActionForUrl(url);
     closeWindow();
   }
