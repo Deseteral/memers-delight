@@ -1,6 +1,7 @@
 import { ipcRenderer } from 'electron';
 import * as React from 'react';
 import styled from 'styled-components';
+import { MemeData } from '../../domain/meme-list';
 import MemeListService from '../../domain/meme-list-service';
 import ActionService from '../../domain/action-service';
 import EntryListing from './EntryListing';
@@ -17,7 +18,8 @@ const Container = styled.div`
 function EntryWindow(): JSX.Element {
   const [entryValue, setEntryValue] = React.useState<string>('');
   const [selectedIndex, setSelectedIndex] = React.useState<number>(0); // TODO: Move to context
-  const { list, itemCount } = MemeListService.getForQuery(entryValue);
+  const [memeList, setMemeList] = React.useState<MemeData[]>([]);
+  const { list, itemCount } = MemeListService.getForQuery(entryValue, memeList);
 
   React.useEffect(() => {
     ActionService.init();
@@ -26,6 +28,12 @@ function EntryWindow(): JSX.Element {
       setEntryValue('');
       setSelectedIndex(0);
     });
+
+    ipcRenderer.on('meme-list-update', (event, nextList) => {
+      setMemeList(nextList);
+    });
+
+    ipcRenderer.send('get-meme-list');
   }, []);
 
   const handleEntryChange = (value: string) => {
