@@ -54,6 +54,10 @@
                   "html": "./src/entry-window/index.html",
                   "js": "./src/entry-window/renderer.ts",
                   "name": "entry_window"
+                }, {
+                  "html": "./src/add-meme-window/index.html",
+                  "js": "./src/add-meme-window/renderer.ts",
+                  "name": "add_meme_window"
                 }
               ]
             }

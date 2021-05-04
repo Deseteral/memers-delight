@@ -1,4 +1,4 @@
-import { clipboard, ipcMain, ipcRenderer, nativeImage } from 'electron';
+import { clipboard, ipcRenderer, nativeImage } from 'electron';
 import { MemeListAction, MemeListData, MemeListItem } from './meme-list';
 
 class ActionService {
@@ -12,7 +12,7 @@ class ActionService {
 
   static executeActionFor(item: (MemeListItem | null)) {
     if (item?.type === 'MEME_LIST_DATA') {
-      ActionService.executeActionForDataItem(item);
+      ActionService.executeActionForUrl(item.url);
       ipcRenderer.send('hide-entry-window');
     }
 
@@ -22,8 +22,7 @@ class ActionService {
     }
   }
 
-  private static executeActionForDataItem(item: MemeListData) {
-    const { url } = item;
+  static executeActionForUrl(url: string) {
     if (url.endsWith('.png') || url.endsWith('.jpg') || url.endsWith('.jpeg')) {
       ipcRenderer.send('download-image', url);
     } else {

@@ -1,0 +1,47 @@
+body {
+  margin: 0;
+  padding: 16px;
+}
+
+* {
+  font-family: "Comic Sans MS";
+  box-sizing: border-box;
+}
+
+.column {
+  display: flex;
+  flex-direction: column;
+}
+
+.row {
+  display: flex;
+  flex-direction: row;
+}
+
+.input-group {
+  margin-bottom: 8px;
+}
+
+.input-labels {
+  margin-right: 4px;
+}
+
+.input-labels label {
+  margin-bottom: 4px;
+}
+
+.inputs {
+  flex: 1;
+}
+
+.inputs input {
+  margin-bottom: 4px;
+}
+
+.button-row {
+  justify-content: flex-end;
+}
+
+.button-row button {
+  margin-left: 4px;
+}

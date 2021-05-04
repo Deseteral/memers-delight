@@ -2,8 +2,10 @@ import { app, ipcMain, globalShortcut, BrowserWindow } from 'electron';
 import fetch from 'node-fetch';
 
 declare const ENTRY_WINDOW_WEBPACK_ENTRY: any;
+declare const ADD_MEME_WINDOW_WEBPACK_ENTRY: any;
 
 let entryWindow: (BrowserWindow | null) = null;
+let addMemeWindow: (BrowserWindow | null) = null;
 
 function createEntryWindow() {
   entryWindow = new BrowserWindow({
@@ -21,6 +23,21 @@ function createEntryWindow() {
   entryWindow.webContents.openDevTools();
 }
 
+function createAddMemeWindow() {
+  addMemeWindow = new BrowserWindow({
+    title: 'Add new meme',
+    height: 200,
+    width: 300,
+    webPreferences: {
+      nodeIntegration: true,
+      contextIsolation: false,
+    },
+  });
+
+  addMemeWindow.loadURL(ADD_MEME_WINDOW_WEBPACK_ENTRY);
+  addMemeWindow.webContents.openDevTools();
+}
+
 app.on('ready', () => {
   globalShortcut.register('Command+Control+Shift+M', () => {
     if (!entryWindow) return;
@@ -31,6 +48,7 @@ app.on('ready', () => {
     entryWindow.setVisibleOnAllWorkspaces(false);
     entryWindow.show();
   });
+
   createEntryWindow();
 });
 
@@ -48,6 +66,10 @@ ipcMain.on('hide-entry-window', () => {
   entryWindow?.hide();
 });
 
+ipcMain.on('close-add-meme-window', () => {
+  addMemeWindow?.close();
+});
+
 ipcMain.on('download-image', async (event, url) => {
   const data = await fetch(url);
   const buffer = await data.buffer();
@@ -55,5 +77,9 @@ ipcMain.on('download-image', async (event, url) => {
 });
 
 ipcMain.on('open-add-meme-modal', () => {
+  createAddMemeWindow();
+});
 
+ipcMain.on('add-meme', (event, { name, url }) => {
+  console.log(name, url);
 });
