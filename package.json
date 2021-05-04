@@ -12,12 +12,38 @@
     "lint": "eslint src --ext ts,tsx",
     "test": "yarn lint"
   },
-  "keywords": [],
   "author": {
     "name": "Deseteral",
     "email": "deseteral@gmail.com"
   },
   "license": "MIT",
+  "dependencies": {
+    "electron-json-storage": "4.5.0",
+    "node-fetch": "2.6.1",
+    "react": "17.0.2",
+    "react-dom": "17.0.2",
+    "styled-components": "5.2.3"
+  },
+  "devDependencies": {
+    "@deseteral/eslint-config": "4.1.0",
+    "@electron-forge/cli": "6.0.0-beta.54",
+    "@electron-forge/maker-zip": "6.0.0-beta.54",
+    "@electron-forge/plugin-webpack": "6.0.0-beta.54",
+    "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
+    "@types/electron-json-storage": "4.5.0",
+    "@types/node-fetch": "2.5.10",
+    "@types/react": "17.0.4",
+    "@types/react-dom": "17.0.3",
+    "@types/styled-components": "5.1.9",
+    "css-loader": "4.2.1",
+    "electron": "12.0.5",
+    "eslint": "7.25.0",
+    "fork-ts-checker-webpack-plugin": "5.0.14",
+    "node-loader": "1.0.1",
+    "style-loader": "1.2.1",
+    "ts-loader": "8.0.2",
+    "typescript": "4.0.2"
+  },
   "config": {
     "forge": {
       "packagerConfig": {
@@ -55,33 +81,6 @@
         ]
       ]
     }
-  },
-  "devDependencies": {
-    "@deseteral/eslint-config": "4.1.0",
-    "@electron-forge/cli": "6.0.0-beta.54",
-    "@electron-forge/maker-zip": "6.0.0-beta.54",
-    "@electron-forge/plugin-webpack": "6.0.0-beta.54",
-    "@marshallofsound/webpack-asset-relocator-loader": "0.5.0",
-    "@types/electron-json-storage": "4.5.0",
-    "@types/node-fetch": "2.5.10",
-    "@types/react": "17.0.4",
-    "@types/react-dom": "17.0.3",
-    "@types/styled-components": "5.1.9",
-    "css-loader": "4.2.1",
-    "electron": "12.0.5",
-    "eslint": "7.25.0",
-    "fork-ts-checker-webpack-plugin": "5.0.14",
-    "node-loader": "1.0.1",
-    "style-loader": "1.2.1",
-    "ts-loader": "8.0.2",
-    "typescript": "4.0.2"
-  },
-  "dependencies": {
-    "electron-json-storage": "4.5.0",
-    "node-fetch": "2.6.1",
-    "react": "17.0.2",
-    "react-dom": "17.0.2",
-    "styled-components": "5.2.3"
   },
   "eslintConfig": {
     "extends": "@deseteral/eslint-config/typescript",
