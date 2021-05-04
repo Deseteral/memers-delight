@@ -1,4 +1,4 @@
-import { app, ipcMain, globalShortcut, BrowserWindow } from 'electron';
+import { app, ipcMain, globalShortcut, BrowserWindow, Menu } from 'electron';
 import fetch from 'node-fetch';
 import { MemeData } from './domain/meme-list';
 import { getMemeList, saveMemeList } from './storage';
@@ -41,6 +41,15 @@ function createAddMemeWindow() {
   // addMemeWindow.webContents.openDevTools();
 }
 
+Menu.setApplicationMenu(Menu.buildFromTemplate([{
+  label: app.name,
+  submenu: [
+    { role: 'about' },
+    { type: 'separator' },
+    { role: 'quit' },
+  ],
+}]));
+
 app.on('ready', () => {
   globalShortcut.register('Command+Control+Shift+M', () => {
     if (!entryWindow) return;
@@ -67,6 +76,7 @@ app.on('activate', () => {
 
 ipcMain.on('hide-entry-window', () => {
   entryWindow?.hide();
+  app.hide();
 });
 
 ipcMain.on('close-add-meme-window', () => {
