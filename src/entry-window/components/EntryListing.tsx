@@ -89,7 +89,7 @@ interface ListingActionItemProps {
 function ListingActionItem({ item, selectedIndex }: ListingActionItemProps): JSX.Element {
   return (
     <ListItem selected={item.index === selectedIndex}>
-      {item.name}, action id: {item.actionId}
+      {item.name}
     </ListItem>
   );
 }
