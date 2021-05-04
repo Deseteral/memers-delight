@@ -1,6 +1,6 @@
 {
-  "name": "meme-doctor",
-  "productName": "Memers Delight",
+  "name": "memers-delight",
+  "productName": "Memer's Delight",
   "version": "1.0.0",
   "description": "A professional memer's toolbox",
   "main": ".webpack/main",
