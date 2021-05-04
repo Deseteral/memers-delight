@@ -1,7 +1,7 @@
 import { app, ipcMain, globalShortcut, BrowserWindow } from 'electron';
 import fetch from 'node-fetch';
-import storage from 'electron-json-storage';
 import { MemeData } from './domain/meme-list';
+import { getMemeList, saveMemeList } from './storage';
 
 declare const ENTRY_WINDOW_WEBPACK_ENTRY: any;
 declare const ADD_MEME_WINDOW_WEBPACK_ENTRY: any;
@@ -82,30 +82,6 @@ ipcMain.on('download-image', async (event, url: string) => {
 ipcMain.on('open-add-meme-modal', () => {
   createAddMemeWindow();
 });
-
-async function getMemeList(): Promise<MemeData[]> {
-  return new Promise((resolve, reject) => {
-    storage.get('memeList', (err, data: ({ list: MemeData[] })) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve(data.list || []);
-    });
-  });
-}
-
-async function saveMemeList(list: MemeData[]): Promise<void> {
-  return new Promise((resolve, reject) => {
-    storage.set('memeList', { list }, (err) => {
-      if (err) {
-        reject(err);
-        return;
-      }
-      resolve();
-    });
-  });
-}
 
 ipcMain.on('add-meme', async (event, data: MemeData) => {
   const list = await getMemeList();
