@@ -11,7 +11,7 @@ let addMemeWindow: (BrowserWindow | null) = null;
 
 function createEntryWindow() {
   entryWindow = new BrowserWindow({
-    width: 800,
+    width: 400,
     height: 600,
     transparent: true,
     frame: false,
@@ -31,6 +31,7 @@ function createAddMemeWindow() {
     width: 500,
     height: 140,
     resizable: false,
+    show: false,
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
@@ -62,25 +63,22 @@ app.on('ready', () => {
   });
 
   createEntryWindow();
+  createAddMemeWindow();
 });
 
 app.on('will-quit', () => {
   globalShortcut.unregisterAll();
 });
 
-app.on('activate', () => {
-  if (BrowserWindow.getAllWindows().length === 0) {
-    createEntryWindow();
+ipcMain.on('hide-entry-window', () => {
+  entryWindow?.hide();
+  if (!addMemeWindow || !addMemeWindow.isVisible()) {
+    app.hide();
   }
 });
 
-ipcMain.on('hide-entry-window', () => {
-  entryWindow?.hide();
-  app.hide();
-});
-
 ipcMain.on('close-add-meme-window', () => {
-  addMemeWindow?.close();
+  addMemeWindow.hide();
 });
 
 ipcMain.on('download-image', async (event, url: string) => {
@@ -90,7 +88,7 @@ ipcMain.on('download-image', async (event, url: string) => {
 });
 
 ipcMain.on('open-add-meme-modal', () => {
-  createAddMemeWindow();
+  addMemeWindow.show();
 });
 
 ipcMain.on('add-meme', async (event, data: MemeData) => {
