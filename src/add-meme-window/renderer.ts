@@ -11,6 +11,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
   function closeWindow() {
     ipcRenderer.send('close-add-meme-window');
+    nameInput.value = '';
+    urlInput.value = '';
+    nameInput.focus();
   }
 
   function addMeme() {
@@ -39,9 +42,11 @@ document.addEventListener('DOMContentLoaded', () => {
     if (event.code === 'Escape') closeWindow();
   });
 
-  // If clipboard contains URL, auto paste it into URL input field
-  const clipboardContents = clipboard.readText();
-  if (clipboardContents.startsWith('http')) {
-    urlInput.value = clipboardContents;
-  }
+  ipcRenderer.on('will-show-window', () => {
+    // If clipboard contains URL, auto paste it into URL input field
+    const clipboardContents = clipboard.readText();
+    if (clipboardContents.startsWith('http')) {
+      urlInput.value = clipboardContents;
+    }
+  });
 });

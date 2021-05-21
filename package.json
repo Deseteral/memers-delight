@@ -1,7 +1,7 @@
 {
   "name": "memers-delight",
   "productName": "Memer's Delight",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A professional memer's toolbox",
   "main": ".webpack/main",
   "scripts": {

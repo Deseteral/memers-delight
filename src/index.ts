@@ -42,14 +42,11 @@ function createAddMemeWindow() {
   // addMemeWindow.webContents.openDevTools();
 }
 
-Menu.setApplicationMenu(Menu.buildFromTemplate([{
-  label: app.name,
-  submenu: [
-    { role: 'about' },
-    { type: 'separator' },
-    { role: 'quit' },
-  ],
-}]));
+Menu.setApplicationMenu(Menu.buildFromTemplate([
+  { role: 'appMenu' },
+  { role: 'editMenu' },
+  { role: 'windowMenu' },
+]));
 
 app.on('ready', () => {
   globalShortcut.register('Command+Control+Shift+M', () => {
@@ -88,6 +85,7 @@ ipcMain.on('download-image', async (event, url: string) => {
 });
 
 ipcMain.on('open-add-meme-modal', () => {
+  addMemeWindow.webContents.send('will-show-window');
   addMemeWindow.show();
 });
 
